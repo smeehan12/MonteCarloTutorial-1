@@ -19,10 +19,10 @@ def pi():
 l2=[]
 for i in range(1000):
     l2.append(pi())
-mu = np.mean(l)
-sigma = np.std(l)
+mu = np.mean(l2)
+sigma = np.std(l2)
 
-plt.hist(l, bins=200)
+plt.hist(l2, bins=200)
 plt.title("pi calculation")
 plt.xlabel("Value")
 plt.ylabel("Frequency")
@@ -33,8 +33,7 @@ plt.show()
 l3 = []
 sigma = []
 ji = []
-for j in range(100,10000,100):
-    if j%1100 ==0: print(j)
+for j in range(100,1000,100):
     for i in range(j):
         l3.append(pi())
     sig = np.std(l3)
