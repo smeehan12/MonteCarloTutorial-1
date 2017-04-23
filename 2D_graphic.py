@@ -6,19 +6,21 @@ from matplotlib.collections import LineCollection
 
 #The new distribution of Z:(1/x)
 def Z():
-    x = np.random.uniform(0.25,.75)
-    y = np.random.uniform(0,10000)
-    f = 1/(x+0.0001)
-    if y <= f:
-    	return x
+	while True:
+    		x = np.random.uniform(0.25,.75)
+    		y = np.random.uniform(0,10000)
+    		f = 1/(x+0.0001)
+    		if y <= f:
+    			return x
 
 #The new distribution of theta(1/x)
 def theta():
-    x = np.random.uniform(0,np.pi*.5)
-    y = np.random.uniform(0,10000)
-    f = 1/(0.0001+x)
-    if y <= f:
-    	return x
+	while True:
+    		x = np.random.uniform(0,np.pi*.5)
+    		y = np.random.uniform(0,10000)
+    		f = 1/(0.0001+x)
+    		if y <= f:
+    			return x
     	
 #This part gererates the parton shower   	
 E = 1
@@ -33,7 +35,7 @@ while i < len(l):
     if P[0] >= .09:#here is the stability limit
         z = Z()
         ang = theta()
-        P_r = np.array([P[0]*z, P[0]*z*np.cos(ang), P[0]*z*np.sin(ang),0])
+        P_r = z*(np.array([P[0], P[1]*np.cos(ang)-P[2]*np.sin(ang), P[1]*np.sin(ang)+P[2]*np.cos(ang),0]))
         P_part = P - P_r
         xbr = xf 
         xbp = xf
