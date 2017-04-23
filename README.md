@@ -11,4 +11,7 @@
 # In the third (Calculation of pi) we used the method accept and reject again to calculate the value of "pi".
 ## to run the code go to clone or download and the type this on your terminal window "python3 'file_name.py'" without the quotation marks"
 ### Here we also there is a part in which we try to see the uncertainity in our calculation which comes with a histogram thats comes after the first one from the pi calculation this histogram is showing the uncertainty of the calculation when try different ways of sampling.
-
+# The file (2D_graphic.py) contains a 2D simulation of the parton shower.
+## We are excepecting to see a 2d graph of a parton shower.
+### Here also in the file we have the (1/x) distribution of theta and z. 
+#### to run the code go to clone or download and the type this on your terminal window "python3 'file_name.py'" without the quotation marks".
