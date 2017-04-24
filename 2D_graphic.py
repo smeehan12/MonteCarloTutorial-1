@@ -12,7 +12,7 @@ def Z():
     		f = 1/(x+0.0001)
     		if y <= f:
     			return x
-
+##############################################################
 #The new distribution of theta(1/x)
 def theta():
 	while True:
@@ -21,7 +21,7 @@ def theta():
     		f = 1/(0.0001+x)
     		if y <= f:
     			return x
-    	
+############################################################    	
 #This part gererates the parton shower   	
 E = 1
 P_i = np.array([E,E,0,0])
