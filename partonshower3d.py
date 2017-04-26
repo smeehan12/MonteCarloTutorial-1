@@ -1,7 +1,10 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from numpy.linalg import norm
+import datetime
+import time
 import csv
 
 
@@ -9,7 +12,7 @@ import csv
 
 def Z():
     while True:
-        x = np.random.uniform(0.25,.75)
+        x = np.random.uniform(0,1)
         y = np.random.uniform(0,10000)
         f = 1/(x+0.0001)
         if y <= f:  
@@ -34,7 +37,7 @@ def phi():
     return x
 
 ###################################################################################################################################################
-#this function here calculates the axis of the rotation; the vector u and the function input"vector" form a plane, from which we find our axis of rotation 
+#the function normv retruns the axis of the rotation; the vector u and the function input"vector" form a plane, from which find a vector which is orthogonal to the plane. 
 def normv(v):
     u = np.array([1,1,1])
     x = u[1]*v[2] - u[2]*v[1]
@@ -44,15 +47,23 @@ def normv(v):
     return normv 
 
 ###################################################################################################################################################
-#This function returns the rotation matrix; angl here is the angle of rotation 
+#This function returns the rotation matrix; angl here is the angle of rotation, v is the axis of the rotation 
+#check wikipedia "https://en.wikipedia.org/wiki/Rotation_matrix"
 def rotation(v,angl):
-    r = np.array([np.cos(angl) + v[0]**2*(1-np.cos(angl)), v[0]*v[1]*(1-np.cos(angl))- v[2]*np.sin(angl), v[0]*v[2]*(1-np.cos(angl))+ v[1]*np.sin(angl),
-                v[1]*v[0]*(1-np.cos(angl))+v[2]*np.sin(angl), np.cos(angl)+v[1]**2*(1-np.cos(angl)), v[1]*v[2]*(1-np.cos(angl))-v[0]*np.sin(angl),
-                 v[2]*v[0]*(1-np.cos(angl))-v[1]*np.sin(angl),v[2]*v[1]*(1-np.cos(angl))+v[0]*np.sin(angl), np.cos(angl)+ v[2]**2*(1-np.cos(angl))])
+    r = np.array([np.cos(angl) + v[0]**2*(1-np.cos(angl)), 
+    v[0]*v[1]*(1-np.cos(angl))- v[2]*np.sin(angl), 
+    v[0]*v[2]*(1-np.cos(angl))+ v[1]*np.sin(angl),
+                v[1]*v[0]*(1-np.cos(angl))+v[2]*np.sin(angl),
+                 np.cos(angl)+v[1]**2*(1-np.cos(angl)), 
+                 v[1]*v[2]*(1-np.cos(angl))-v[0]*np.sin(angl),
+                 v[2]*v[0]*(1-np.cos(angl))-v[1]*np.sin(angl),
+                 v[2]*v[1]*(1-np.cos(angl))+v[0]*np.sin(angl),
+                  np.cos(angl)+ v[2]**2*(1-np.cos(angl))])
     return r.reshape(3,3)
 
 ###################################################################################################################################################
-
+#the function parton3d returns a list of tuples(l) that every tuple contains informaton of the particle(the for momentum, the initial position and the final position) and d is a flat list of l.
+#first the particle is being rotated with angle theta "rot1" then is rotated by angle phi rot2 
 def parton3d():
     E = 1
     i = 0
@@ -86,40 +97,37 @@ def parton3d():
     return d
 
 ###################################################################################################################################################
-# the function above generates a 3D  parton shower
+# the function parton3d generates a 3D  parton shower
 # next we save the data in a csv file
 #after we read from the same file to plot a 3D parton shower
 
 
 d  = parton3d()
-with open("parton.csv", "w") as csv_file:
+t =  time.strftime('%a %H:%M')
+f = "parton" + t +'.csv'
+with open(f, "w") as csv_file:
         writer = csv.writer(csv_file, delimiter=',')
         for i in d:
             writer.writerow(i)
 
 fig = plt.figure()
 ax = fig.gca(projection ='3d')
-ax.set_xlim3d(-4, 10)
-ax.set_ylim3d(-3,5)
-ax.set_zlim3d(-3,2)
-with open('parton.csv', 'r') as csv_file:
+with open(f, 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     for row in reader:
-        l = list(map(float, row))
-        x1 = l[4]
-        y1 = l[5]
-        z1 = l[6]
-        x2 = l[7]
-        y2 = l[8]
-        z2 = l[9]
-        if l[0] >=.8:
-            color = 'red'
-        if l[0] >.5 and l[0] < .8:
-            color = 'yellow'
-        if l[0] < .5:
-            color = 'magenta'
-        if l[0] <= .1:
-            color = 'blue'
-        ax.plot([x1,x2],[y1,y2],[z1,z2], color=color, linewidth=l[0])
+            l = list(map(float, row))
+            x1, y1, z1 = l[4:7]
+            x2, y2, z2 = l[7:]
+            if l[0] >=.8:
+                color = 'blue'
+            if l[0] >.5 and l[0] < .8:
+                color = 'yellow'
+            if l[0] < .5:
+                color = 'magenta'
+            if l[0] <= .1:
+                color = 'red'
+            ax.plot([x1,x2],[y1,y2],[z1,z2], color=color)       
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles, labels)    
 plt.show()
 
