@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.patches as mpatches
 from numpy.linalg import norm
 import datetime
 import time
@@ -103,7 +104,7 @@ def parton3d():
 
 
 d  = parton3d()
-t =  time.strftime('%a %H:%M')
+t =  time.strftime('%a_%H_%M')
 f = "parton" + t +'.csv'
 with open(f, "w") as csv_file:
         writer = csv.writer(csv_file, delimiter=',')
@@ -127,7 +128,12 @@ with open(f, 'r') as csv_file:
             if l[0] <= .1:
                 color = 'red'
             ax.plot([x1,x2],[y1,y2],[z1,z2], color=color)       
-handles, labels = ax.get_legend_handles_labels()
-ax.legend(handles, labels)    
+a = []
+b = []
+plt.plot(a,b, label = 'E < 0.1', color = 'red')
+plt.plot(a,b, label = 'E >= 0.8', color = 'blue')
+plt.plot(a,b, label = 'E > 0.5', color = 'yellow')
+plt.plot(a,b, label = 'E < 0.5', color = 'magenta')
+plt.legend(loc = 2)
 plt.show()
 
