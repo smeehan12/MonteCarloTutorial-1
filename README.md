@@ -15,3 +15,6 @@
 ## We are excepecting to see a 2d graph of a parton shower.
 ### Here also in the file we have the (1/x) distribution of theta and z. 
 #### to run the code go to clone or download and the type this on your terminal window "python3 'file_name.py'" without the quotation marks".
+# The file "partonshower3d.py" has a code for simulating a 3D parton shower
+## We excepecting to see a 3D plot of a parton shower and a csv file contains the data with the name "parton.csv"
+### to run the code go to clone or download and the type this on your terminal window "python3 'file_name.py'" without the quotation marks".
